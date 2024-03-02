@@ -14,5 +14,7 @@ RUN bundle install
 # Copy the current directory contents into the container at /app
 COPY . /app
 
+EXPOSE 4567
+
 # Run the ruby script when the container launches
 CMD ["ruby", "app.rb"]
