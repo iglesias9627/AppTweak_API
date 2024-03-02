@@ -17,4 +17,4 @@ COPY . /app
 EXPOSE 4567
 
 # Run the ruby script when the container launches
-CMD ["ruby", "app.rb"]
+CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "-p", "4567"]
