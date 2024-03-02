@@ -5,7 +5,8 @@ FROM ruby:3.2.3-slim
 WORKDIR /app
 
 # Copy the Gemfile and Gemfile.lock into the container
-COPY Gemfile Gemfile.lock /app/
+# COPY Gemfile Gemfile.lock /app/
+COPY Gemfile /app/
 
 # Install the required gems
 RUN bundle install
