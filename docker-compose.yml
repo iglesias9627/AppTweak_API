@@ -25,9 +25,7 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://admin:admin@mongo:27017/
   
   ruby-api-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ruby-api-app
     restart: always
     ports:
       - 4567:4567
