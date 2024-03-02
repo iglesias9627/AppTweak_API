@@ -1,12 +1,11 @@
 # Use the official Ruby image from the Docker Hub
-FROM ruby:3.2.3-slim
+FROM ruby:3.2.3
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the Gemfile and Gemfile.lock into the container
 COPY Gemfile Gemfile.lock /app/
-# COPY Gemfile /app/
 
 # Install the required gems
 RUN bundle install
