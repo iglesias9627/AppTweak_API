@@ -4,3 +4,4 @@ source "https://rubygems.org"
 
 # gem "rails"
 gem "sinatra"
+gem "rackup", "~> 2.1"
