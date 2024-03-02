@@ -8,6 +8,8 @@ services:
     restart: always
     ports:
       - 27017:27017
+    volumes:
+      - ./DB/data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
