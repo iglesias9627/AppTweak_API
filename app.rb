@@ -6,7 +6,6 @@ require 'json'
 get '/' do
 # here we specify the content type to respond with
   content_type :json
-
   { item: 'Red Dead Redemption 2', price: 19.79, status: 'Available'  }.to_json
 end
 
