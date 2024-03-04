@@ -13,5 +13,5 @@ class LocationModel
   validates :longitude, presence: true
   validates :slug, presence: true, uniqueness: true, format: { with: /\A[a-z0-9_-]+\z/i }
 
-  has_many :temperatures
+  has_many :temperature_models
 end

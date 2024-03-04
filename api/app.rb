@@ -7,7 +7,6 @@ require_relative './models/temperature_model'
 
 module App
   class SinatraApi < Sinatra::Base
-    #Mongoid.load!('./config/mongoid.yml', :development)
     configure do
       if ENV['RACK_ENV'] == 'production'
         Mongoid.load!('./config/mongoid.yml', :production)
@@ -27,7 +26,7 @@ module App
     not_found do
       content_type :json
       status 404
-      { message: "Endpoint doesn't exists!" }.to_json
+      { error: "Endpoint doesn't exists!" }.to_json
     end
   end
 end
