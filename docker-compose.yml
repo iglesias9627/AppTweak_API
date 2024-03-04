@@ -10,6 +10,7 @@ services:
       - 27017:27017
     volumes:
       - ./DB/data:/data/db
+      # - ./docker_config/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -35,3 +36,4 @@ services:
       - 4567:4567
     volumes:
       - ./:/app
+      - ./logs:/logs
