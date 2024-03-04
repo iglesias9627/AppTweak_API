@@ -1,0 +1,10 @@
+development:
+  clients:
+    default:
+      database: admin
+      hosts:
+        - localhost:27017
+      options:
+        server_selection_timeout: 1
+        user: admin
+        password: admin
