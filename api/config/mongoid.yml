@@ -8,3 +8,14 @@ development:
         server_selection_timeout: 1
         user: admin
         password: admin
+
+production:
+  clients:
+    default:
+      database: admin
+      hosts:
+        - mongo:27017
+      options:
+        server_selection_timeout: 1
+        user: admin
+        password: admin

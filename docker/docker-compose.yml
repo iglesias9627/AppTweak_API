@@ -14,6 +14,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
+    networks:
+      - ruby-api-network
 
   mongo-express:
     image: mongo-express
@@ -26,14 +28,19 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://admin:admin@mongo:27017/
     depends_on:
       - mongo
+    networks:
+      - ruby-api-network
   
   ruby-api-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ruby-api
     restart: always
     ports:
       - 4567:4567
-    volumes:
-      - ./:/app
-      - ./logs:/logs
+    #volumes:
+      #- ./:/app
+      #- ./logs:/logs
+    networks:
+      - ruby-api-network
+
+networks:
+  ruby-api-network:
