@@ -7,7 +7,14 @@ require_relative './models/temperature_model'
 
 module App
   class SinatraApi < Sinatra::Base
-    Mongoid.load!('./config/mongoid.yml', :development)
+    #Mongoid.load!('./config/mongoid.yml', :development)
+    configure do
+      if ENV['RACK_ENV'] == 'production'
+        Mongoid.load!('./config/mongoid.yml', :production)
+      else
+        Mongoid.load!('./config/mongoid.yml', :development)
+      end
+    end
 
     use Routes::Location
     use Routes::Temperature
