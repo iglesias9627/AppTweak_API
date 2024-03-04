@@ -19,7 +19,8 @@ module App
 
     not_found do
       content_type :json
-      { status: 404, message: "Endpoint doesn't exists!" }.to_json
+      status 404
+      { message: "Endpoint doesn't exists!" }.to_json
     end
   end
 end

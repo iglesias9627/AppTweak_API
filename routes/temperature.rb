@@ -43,16 +43,15 @@ module Routes
 
         location = LocationModel.find_by(slug: slug)
 
-        if location.nil?
-          status 404
-          return { error: "Location not found" }.to_json
-        end
-
         list_dates = api_7timer_query(location, start_date, end_date)
 
         list_dates_filtered = filter_by_dates(start_date, end_date, list_dates)
 
         { response: list_dates_filtered  }.to_json
+      rescue  Mongoid::Errors::DocumentNotFound => e
+        status 404
+        { error: 'Location not found' }.to_json
+
       rescue StandardError => e
         status 500
         { error: "Internal server error: #{e.message}" }.to_json

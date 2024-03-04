@@ -7,11 +7,6 @@ require_relative '../models/location_model'
 
 module Routes
   class Location < Sinatra::Base
-    get '/locations' do
-      content_type :json
-      { message: "GET LOCATIONS"  }.to_json
-    end
-
     post '/locations' do
       content_type :json
 
