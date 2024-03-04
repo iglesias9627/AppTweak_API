@@ -17,11 +17,12 @@ def valid_date_range(start_date_str, end_date_str)
   return (Date.parse(end_date_str) - Date.parse(start_date_str)).to_i <= 3
 end
 
-# Function to validate that start date is today
+# Function to validate that start date is today or + 3 days
 def valid_start_date_today(start_date_str)
   start_date = Date.parse(start_date_str)
   today = Date.today
-  return start_date == today
+  max_allowed_date = today + 3
+  return start_date >= today && start_date <= max_allowed_date
 end
 
 # Function to convert timepoint to DateTime

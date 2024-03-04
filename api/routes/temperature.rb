@@ -32,7 +32,9 @@ module Routes
         # Validate start date
         unless valid_start_date_today(start_date)
           status 400
-          return { error: "Start date must be #{Date.today.strftime('%Y-%m-%d')}" }.to_json
+          today = Date.today
+          max_allowed_date = today + 2
+          return { error: "Start date must be from #{today.strftime('%Y-%m-%d')} until #{max_allowed_date.strftime('%Y-%m-%d')} " }.to_json
         end
 
         # Validate date range
@@ -57,7 +59,6 @@ module Routes
               'max-forecasted' => temperature.max_forecasted
             }
           end
-          puts list_dates_filtered
         else
           # Data doesn't exists in database so we retreive data from 7Timer API and we save in database
           list_dates = api_7_timer_query(location, start_date, end_date)

@@ -8,6 +8,8 @@ development:
         server_selection_timeout: 1
         user: admin
         password: admin
+  options:
+    raise_not_found_error: false
 
 production:
   clients:
@@ -19,3 +21,5 @@ production:
         server_selection_timeout: 1
         user: admin
         password: admin
+  options:
+    raise_not_found_error: false
