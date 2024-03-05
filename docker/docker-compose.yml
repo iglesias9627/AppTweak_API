@@ -10,7 +10,6 @@ services:
       - 27017:27017
     volumes:
       - ./DB/data:/data/db
-      # - ./docker_config/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -32,15 +31,26 @@ services:
       - ruby-api-network
   
   ruby-api-app:
-    image: iglesias9627/ruby_api_sinatra:v0.0.1
+    image: iglesias9627/ruby_api_sinatra:v0.0.2
     restart: always
     ports:
       - 4567:4567
     environment:
       RACK_ENV: production
-    #volumes:
-      #- ./:/app
-      #- ./logs:/logs
+    networks:
+      - ruby-api-network
+  
+  nodejs-fetch-module:
+    image: iglesias9627/node_js_fetching_module:v0.0.1
+    restart: always
+    environment:
+      MONGODB_URI: 'mongodb://admin:admin@mongo:27017/admin'
+      TIME_CRON: '50 18 * * *'
+      LOGGER_DIR: logs
+    depends_on:
+      - mongo
+    volumes:
+      - ./logs:/app/src/logs
     networks:
       - ruby-api-network
 
