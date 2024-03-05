@@ -2,6 +2,12 @@
 
 Welcome to the AppTweak REST API project, accompanied by a NodeJS module designed to fetch and save data daily. This project utilizes Ruby with Sinatra for the REST API and MongoDB for data storage.
 
+- (![https://example.com/image1.jpg](https://zestedesavoir.com/media/galleries/2959/eb03fd9e-b0d7-4b23-9b05-a258163aca64.jpg))
+- ![!\[MongoDB\](https://example.com/image2.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MongoDB_Logo.svg/2560px-MongoDB_Logo.svg.png)
+- ![NodeJS](https://devtop.io/wp-content/uploads/2022/10/node-js.jpg)
+- ![Docker](https://miro.medium.com/v2/resize:fit:1200/1*XvJ0GDWOAEHNApZvw-dOVQ.png)
+
+
 ## Overview
 
 This project consists of two main modules:
@@ -204,8 +210,8 @@ You will find some docker environment variables in the `/docker/docker-compose.y
 
 - **nodejs-fetch-module:**
   - MONGODB_URI: 'mongodb://admin:admin@mongo:27017/admin'  #(URL of mongoDB)
-  - TIME_CRON: '50 18 * * *'  #(hour to execute the fetch-save/update data | use => MIN HOUR DAY MONTH WEEK)
-  - LOGGER_DIR: logs                                        #(directory where save logs of app)
+  - TIME_CRON: '50 18 * * *'  #(when execute the fetch-save/update data | use => MIN HOUR DAY MONTH WEEK)
+  - LOGGER_DIR: logs                                        #(directory to save logs of app)
 
 ## Docker Images
 When executing docker-compose up -d, Docker will automatically download the images hosted in my public DockerHub repository. However, if you prefer to download the image separately beforehand, you can use the following command:
@@ -217,5 +223,17 @@ When executing docker-compose up -d, Docker will automatically download the imag
 `iglesias9627/node_js_fetching_module:v0.0.1` docker image is the NodeJS application and `iglesias9627/ruby_api_sinatra:v0.0.2` is the Ruby REST API.  
 
 ## Ruby
+The REST API application was developped using the Sinatra Framework in a modular way with Ruby version: 3.2.3.
+
+If you want to run this application locally (in dev mode) go to `APPTWEAK_API/api` and execute in terminal:
+```bash 
+ruby dev.rb
+```
 
 ## NodeJS
+The application for daily fetching and saving temperature forecasts with Node version: 20.11.1. 
+
+If you want to run this application locally (in dev mode) go to `APPTWEAK_API/nodejs_fetch_module` and execute in terminal:
+```bash 
+npm start
+```
