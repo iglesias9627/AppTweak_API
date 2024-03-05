@@ -32,7 +32,7 @@ services:
       - ruby-api-network
   
   ruby-api-app:
-    image: ruby-api
+    image: iglesias9627/ruby_api_sinatra:v0.0.1
     restart: always
     ports:
       - 4567:4567
