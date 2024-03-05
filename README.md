@@ -8,7 +8,13 @@ This project consists of two main components:
 
 1. **REST API (Ruby, Sinatra, MongoDB)**
    - The REST API built using Sinatra and MongoDB provides endpoints for creating/storing locations and
-   .
+   for retrieving temperature forecasts of stored locations.
+
+   - Whenever a user requests a temperature forecast range for a specific location stored in the database, the application follows a systematic process. Initially, it checks if the requested data already exists in the database. If present, the data is directly retrieved from the database. In case the data is not found, the application proceeds to validate against specific constraints before querying a Weather API (7 Timer-ASTRO).
+   
+   - When contacting the Weather API, the application fetches all available data. Subsequently, it populates the database with this newly retrieved information, ensuring it is readily available for future user requests. 
+   
+   - Finally, the application fulfills the user's initial request by providing the list of temperature forecasts for the specified range. This approach helps optimize by minimizing the need to repeatedly query the Weather API. 
 
 2. **NodeJS Module for Daily Data Fetching**
    - A NodeJS module is incorporated to fetch data daily and store it in MongoDB.
@@ -16,11 +22,26 @@ This project consists of two main components:
 ## Features
 
 - **REST API Endpoints:**
-  - Two API endpoints for creating and storing locations in MongoDB.
+  - An API endpoint for creating and storing locations in MongoDB.
   - Example body format: `{"latitude": 18.50012, "longitude": -70.98857, "slug": "santo-domingo"}`
+  - An API endpoint for retrieving temperature forecasts of locations stored in MongoDB.
+  - Example of response given by API endpoint: `{
+    "response": [
+        {
+            "date": "2024-03-05",
+            "min-forecasted": 28,
+            "max-forecasted": 30
+        },
+        {
+            "date": "2024-03-06",
+            "min-forecasted": 22,
+            "max-forecasted": 30
+        }
+    ]
+    }`
 
 - **NodeJS Data Fetching Module:**
-  - Fetches data daily and ensures it is saved in the MongoDB to be used by the API later.
+  - Get all the locations stored in MongoDB and iterates the locations to retrieve the temperature data from the 7 timer weather
 
 ## Getting Started
 
