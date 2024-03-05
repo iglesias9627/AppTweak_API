@@ -29,19 +29,3 @@ end
 def timepoint_to_datetime(init, timepoint)
   DateTime.strptime(init, '%Y%m%d%H') + (timepoint / 24.0)
 end
-
-# Function to filter dates
-def filter_by_dates(start_date_str, end_date_str, list_dates)
-  list_filtered = []
-
-  start_date = Date.parse(start_date_str) rescue nil
-  end_date = Date.parse(end_date_str) rescue nil
-
-  list_dates.each do |item|
-    date = Date.parse(item["date"]) rescue nil
-    if date >= start_date && date <= end_date
-      list_filtered << item
-    end
-  end
-  return list_filtered
-end

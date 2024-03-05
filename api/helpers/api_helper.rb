@@ -31,7 +31,7 @@ def calculate_max_min_temperature_by_date(weather_data)
 end
 
 # Function to make API call to 7 timer API
-def api_7_timer_query(location, start_date, end_date)
+def api_7_timer_query(location)
   begin
     # Get longitude and latitude values
     lon = location.longitude

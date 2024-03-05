@@ -5,13 +5,13 @@ require_relative '../helpers/api_helper'
 require_relative '../helpers/date_helper'
 require_relative '../models/location_model'
 require_relative '../models/temperature_model'
+require_relative '../services/temperature_db'
 
 module Routes
   class Temperature < Sinatra::Base
 
     get '/temperature_forecast/:slug/:start_date/:end_date' do
       content_type :json
-
       begin
         slug = params[:slug]
         start_date = params[:start_date]
@@ -29,57 +29,60 @@ module Routes
           return { error: 'End date must be after the start date' }.to_json
         end
 
-        # Validate start date
-        unless valid_start_date_today(start_date)
+        unless location = LocationModel.find_by(slug: slug)
           status 400
+          return { error: "Location: #{slug} not found in database!"}.to_json
+        end
+
+        if location.temperature_models.exists?(date: start_date) == true && location.temperature_models.exists?(date: end_date) == true
+          # Data already exists in the database for the specified date range
+          temperatures = retrieve_temperatures_from_db(location, start_date, end_date)
+          puts "#{start_date} exists in DB and #{end_date} exists in DB"
+          return { response: temperatures }.to_json
+
+        elsif location.temperature_models.exists?(date: start_date) == false && location.temperature_models.exists?(date: end_date) == true
+          status 404
+          return { error: "Temperature for start date: #{start_date} NOT exists in DB, temperature for end date: #{end_date} exists in DB" }.to_json
+
+        elsif location.temperature_models.exists?(date: start_date) == true && location.temperature_models.exists?(date: end_date) == false
+          puts "#{start_date} exists in DB and #{end_date} NOT exists in DB"
           today = Date.today
-          max_allowed_date = today + 2
-          return { error: "Start date must be from #{today.strftime('%Y-%m-%d')} until #{max_allowed_date.strftime('%Y-%m-%d')} " }.to_json
-        end
-
-        # Validate date range
-        unless valid_date_range(start_date, end_date)
-          status 400
-          return { error: 'Date range is more than 3 days' }.to_json
-        end
-
-        list_dates_filtered = []
-
-        location = LocationModel.find_by(slug: slug)
-
-        # Check if data already exists in the database for the specified date range
-        existing_temperatures = location.temperature_models.where(date: { '$gte' => start_date, '$lte' => end_date })
-
-        if existing_temperatures.any?
-          # Data exists in the database, retrieve and return it
-          list_dates_filtered = existing_temperatures.map do |temperature|
-            {
-              'date' => temperature.date,
-              'min-forecasted' => temperature.min_forecasted,
-              'max-forecasted' => temperature.max_forecasted
-            }
+          max_allowed_date = today + 3
+          parsed_end_date = Date.parse(end_date)
+          if parsed_end_date == today || parsed_end_date <= max_allowed_date
+            # We retreive data from 7 Timer API and we save in database
+            puts "End date is in the range and we can call the 7 timer API"
+            list_dates = api_7_timer_query(location)
+            save_temperatures_in_db(location, list_dates)
+            temperatures = retrieve_temperatures_from_db(location, start_date, end_date)
+            return { response: temperatures }.to_json
+          else
+            status 400
+            return { error: "We can not retrieve the data for end date: #{end_date}" }.to_json
           end
-        else
-          # Data doesn't exists in database so we retreive data from 7Timer API and we save in database
-          list_dates = api_7_timer_query(location, start_date, end_date)
 
-          list_dates.each do |temp_data|
-            temperature = location.temperature_models.find_or_initialize_by(date: temp_data['date'])
-            temperature.min_forecasted = temp_data['min-forecasted']
-            temperature.max_forecasted = temp_data['max-forecasted']
-            unless temperature.save
-              status 400
-              return {error: "Error saving record: #{temperature.errors.full_messages.join(', ')}"}.to_json
-            end
+        elsif location.temperature_models.exists?(date: start_date) == false && location.temperature_models.exists?(date: end_date) == false
+          puts "#{start_date} NOT exists in DB and #{end_date} NOT exists in DB"
+          puts "We verify if we can retrieve data from API"
+
+          # Validate start date
+          unless valid_start_date_today(start_date)
+            status 400
+            today = Date.today
+            return { error: "Start date must be from #{today.strftime('%Y-%m-%d')}" }.to_json
           end
-          list_dates_filtered = filter_by_dates(start_date, end_date, list_dates)
+
+          # Validate date range
+          unless valid_date_range(start_date, end_date)
+            status 400
+            return { error: 'Date range is more than 3 days' }.to_json
+          end
+
+          list_dates = api_7_timer_query(location)
+          save_temperatures_in_db(location, list_dates)
+          return { response: list_dates }.to_json
+
         end
-
-        { response: list_dates_filtered  }.to_json
-
-      rescue  Mongoid::Errors::DocumentNotFound => e
-        status 404
-        { error: 'Location not found' }.to_json
 
       rescue StandardError => e
         status 500
