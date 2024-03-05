@@ -1,6 +1,6 @@
 # REST API for AppTweak
 
-A brief description of your Node.js application.
+This small project is composed of two small applications: a REST API with Ruby, Sinatra and MongoDB, and a module built in NodeJS used to fetch data every day and to be saved in a MongoDB.
 
 ## Table of Contents
 
