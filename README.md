@@ -4,7 +4,7 @@ Welcome to the AppTweak REST API project, accompanied by a NodeJS module designe
 
 ## Overview
 
-This project consists of two main components:
+This project consists of two main modules:
 
 1. **REST API (Ruby, Sinatra, MongoDB)**
    - The REST API built using Sinatra and MongoDB provides endpoints for creating/storing locations and
@@ -17,31 +17,9 @@ This project consists of two main components:
    - Finally, the application fulfills the user's initial request by providing the list of temperature forecasts for the specified range. This approach helps optimize by minimizing the need to repeatedly query the Weather API. 
 
 2. **NodeJS Module for Daily Data Fetching**
-   - A NodeJS module is incorporated to fetch data daily and store it in MongoDB.
-
-## Features
-
-- **REST API Endpoints:**
-  - An API endpoint for creating and storing locations in MongoDB.
-  - Example body format: `{"latitude": 18.50012, "longitude": -70.98857, "slug": "santo-domingo"}`
-  - An API endpoint for retrieving temperature forecasts of locations stored in MongoDB.
-  - Example of response given by API endpoint: `{
-    "response": [
-        {
-            "date": "2024-03-05",
-            "min-forecasted": 28,
-            "max-forecasted": 30
-        },
-        {
-            "date": "2024-03-06",
-            "min-forecasted": 22,
-            "max-forecasted": 30
-        }
-    ]
-    }`
-
-- **NodeJS Data Fetching Module:**
-  - Get all the locations stored in MongoDB and iterates the locations to retrieve the temperature data from the 7 timer weather
+   - A NodeJS module designed for daily data retrieval and storage in MongoDB. Operated by a cron job, the module iterates through the locations stored in the database. For each location, the application retrieves temperature forecasts, calculates the minimum and maximum temperatures for each date in the dataset, and subsequently updates or inserts this data into the database.
+   
+   - Users have the flexibility to specify the preferred execution time for the module daily. This customization empowers users to control when the system fetches data from the API, ensuring consistent updates and the accumulation of additional data for future days.
 
 ## Getting Started
 
@@ -100,7 +78,7 @@ Create a new location and store it in MongoDB.
 - **Endpoint:**
 GET /temperature_forecast
 - **Description:**
-Retrieve temperature forecasts of a stored Location in MongoDB.
+Retrieve temperature forecasts of a stored Location in MongoDB. This retrieves the data from database if exists or fetch data from Weather API if the request complies with the constraints.
 
 - **Response example:**
     ```json
@@ -118,6 +96,9 @@ Retrieve temperature forecasts of a stored Location in MongoDB.
         }
     ]
     }
+    ```
+
+- **Some error responses:**
 
 ## Accessing the Services
 
