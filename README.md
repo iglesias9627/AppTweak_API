@@ -1,6 +1,8 @@
-# REST API for AppTweak
+# REST API for AppTweak + NodeJS module to fetch and save data every day
 
 This small project is composed of two small applications: a REST API with Ruby, Sinatra and MongoDB, and a module built in NodeJS used to fetch data every day and to be saved in a MongoDB.
+
+![alt text](https://miro.medium.com/v2/resize:fit:300/1*NIAh2_nKxPwK3gq2Jgrcfw.png))
 
 ## Table of Contents
 
