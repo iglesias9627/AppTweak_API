@@ -2,11 +2,6 @@
 
 Welcome to the AppTweak REST API project, accompanied by a NodeJS module designed to fetch and save data daily. This project utilizes Ruby with Sinatra for the REST API and MongoDB for data storage.
 
-- (![https://example.com/image1.jpg](https://zestedesavoir.com/media/galleries/2959/eb03fd9e-b0d7-4b23-9b05-a258163aca64.jpg))
-- ![!\[MongoDB\](https://example.com/image2.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/MongoDB_Logo.svg/2560px-MongoDB_Logo.svg.png)
-- ![NodeJS](https://devtop.io/wp-content/uploads/2022/10/node-js.jpg)
-- ![Docker](https://miro.medium.com/v2/resize:fit:1200/1*XvJ0GDWOAEHNApZvw-dOVQ.png)
-
 
 ## Overview
 
