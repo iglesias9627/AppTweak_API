@@ -80,7 +80,8 @@ module Routes
 
           list_dates = api_7_timer_query(location)
           save_temperatures_in_db(location, list_dates)
-          return { response: list_dates }.to_json
+          temperatures = retrieve_temperatures_from_db(location, start_date, end_date)
+          return { response: temperatures }.to_json
 
         end
 
