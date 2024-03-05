@@ -4,7 +4,7 @@ A brief description of your Node.js application.
 
 ## Table of Contents
 
-- [Run](#installation)
+- [Run](#run)
 - [Usage](#usage)
 - [Environment Variables](#environment-variables)
 - [Docker](#docker)
