@@ -51,10 +51,11 @@ This command will initiate the deployment process and run the Docker containers 
 Two directories will be created in your machine: 
 
 ```bash
-/docker/DB
-and
-/logs
+APPTWEAK_API/docker/DB
+APPTWEAK_API/docker/logs
 ```
+
+`APPTWEAK_API/docker/DB` will store the data from MongoDB to persist data and `APPTWEAK_API/docker/logs` will store the logs of the NodeJS daily-fetching data application.
 
 ## API Endpoints
 
