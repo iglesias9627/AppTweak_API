@@ -68,45 +68,106 @@ Create a new location and store it in MongoDB.
 - **Request Body:**
     ```json
     {
-    "latitude": 18.50012,
-    "longitude": -70.98857,
-    "slug": "santo-domingo"
+        "latitude": 18.50012,
+        "longitude": -70.98857,
+        "slug": "santo-domingo"
     }
-
-### Retrieve temperature forecasts
-
-- **Endpoint:**
-GET /temperature_forecast
-- **Description:**
-Retrieve temperature forecasts of a stored Location in MongoDB. This retrieves the data from database if exists or fetch data from Weather API if the request complies with the constraints.
+    ```
 
 - **Response example:**
     ```json
     {
-    "response": [
+        "message": "Location created successfully",
+        "location": 
         {
-            "date": "2024-03-05",
-            "min-forecasted": 28,
-            "max-forecasted": 30
-        },
-        {
-            "date": "2024-03-06",
-            "min-forecasted": 22,
-            "max-forecasted": 30
+            "_id": 
+            {
+                "$oid": "65e76728c69d59000104068e"
+            },
+            "created_at": "2024-03-05T18:40:40.703+00:00",
+            "latitude": 18.50012,
+            "longitude": -70.98857,
+            "slug": "santo-domingo",
+            "updated_at": "2024-03-05T18:40:40.703+00:00"
         }
-    ]
     }
     ```
 
-- **Some error responses:**
+- **Error when slug already exists:**
+    ```json
+    {
+        "errors": [
+            "Slug has already been taken"
+        ]
+    }
+    ```
+
+### Retrieve temperature forecasts
+
+- **Endpoint:**
+GET /temperature_forecast/:slug/:start_date/:end_date
+- **Description:**
+Retrieve temperature forecasts of a stored Location in MongoDB in a date range. This retrieves the data from database if exists or fetch data from Weather API if the request complies with the constraints.
+
+- **Response example:**
+    ```json
+    {
+        "response": [
+            {
+                "date": "2024-03-05",
+                "min-forecasted": 28,
+                "max-forecasted": 30
+            },
+            {
+                "date": "2024-03-06",
+                "min-forecasted": 22,
+                "max-forecasted": 30
+            }
+        ]
+    }
+    ```
+
+- **Error when a location does not exists:**
+    ```json
+    {
+        "error": "Location: san-salvador not found in database!"
+    }
+    ```
+- **Error when temperature data does not exists in DB and we cannot retreive it from Weather API:**
+    ```json
+    {
+        "error": "Start date must be from 2024-03-05"
+    }
+    ```
+- **Error when end date is after start date:**
+    ```json
+    {
+        "error": "End date must be after the start date"
+    }
+    ```
+- **Some error handled:**
+    ```json
+    ```
+- **Some error handled:**
+    ```json
+    ```
+- **Some error handled:**
+    ```json
+    ```
+- **Some error handled:**
+    ```json
+    ```
+- **Some error handled:**
+    ```json
+    ```
 
 ## Accessing the Services
 
 - **Ruby API (REST API):**
   - Port: 4567 
   - Base URL: http://localhost:4567
-  - Endpoint for Locations: /locations
-  - Endpoint for Temperature forecasts: /temperature_forecast
+  - Endpoint for Locations: /locations/
+  - Endpoint for Temperature forecasts: /temperature_forecast/
 
 - **NodeJS Data Fetching Module:**
   - No specific port
