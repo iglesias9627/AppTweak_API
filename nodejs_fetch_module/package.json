@@ -1,0 +1,36 @@
+{
+  "name": "nodejs_fetch_module",
+  "version": "1.0.0",
+  "description": "NodeJS module to fetch data every day from API 7 timer and to store temperature forecasts for every location in the database.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iglesias9627/AppTweak_API.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "API",
+    "7",
+    "timer",
+    "temperature",
+    "forecasts",
+    "MongoDB"
+  ],
+  "author": "Jorge Iglesias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iglesias9627/AppTweak_API/issues"
+  },
+  "homepage": "https://github.com/iglesias9627/AppTweak_API#readme",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "mongodb": "^6.4.0",
+    "node-cron": "^3.0.3",
+    "winston": "^3.12.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}
