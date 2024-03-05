@@ -18,3 +18,12 @@ A brief description of your Node.js application.
    ```bash
    git clone https://github.com/iglesias9626/AppTweak_API.git
 
+## Usage
+
+## Environment Variables
+
+## Docker
+
+## Contributing
+
+## License
