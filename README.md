@@ -28,6 +28,34 @@ This project consists of two main components:
    ```bash
    git clone https://github.com/iglesias9626/AppTweak_API.git
 
+## Deploy using Docker
+
+This application was executed using Docker version 4.21.1.
+
+To deploy the application using Docker, follow these steps:
+
+1. Navigate to the directory where the `docker-compose.yml` file is located.
+
+    ```bash
+    cd APPTWEAK_API/docker
+    ```
+
+2. Run the following command in the terminal to start the Docker containers in the background.
+
+    ```bash
+    docker-compose up -d
+    ```
+
+This command will initiate the deployment process and run the Docker containers detached from the terminal.
+
+Two directories will be created in your machine: 
+
+```bash
+/docker/DB
+and
+/logs
+```
+
 ## API Endpoints
 
 ### Create a New Location
@@ -69,13 +97,10 @@ Retrieve temperature forecasts of a stored Location in MongoDB.
     ]
     }
 
-## Docker
-
-## Environment Variables
-
 ## Accessing the Services
 
 - **Ruby API (REST API):**
+  - Port: 4567 
   - Base URL: http://localhost:4567
   - Endpoint for Locations: /locations
   - Endpoint for Temperature forecasts: /temperature_forecast
@@ -89,6 +114,8 @@ Retrieve temperature forecasts of a stored Location in MongoDB.
 - **Mongo-Express:**
   - Port: 8081
   - Base URL: http://localhost:8081/
+
+## Environment Variables
 
 ## Ruby
 
