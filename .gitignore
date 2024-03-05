@@ -1,3 +1,6 @@
 # Ignore DB directory 
 docker/DB/*
+docker/logs/*
 api/logs/*
+nodejs_fetch_module/node_modules/*
+nodejs_fetch_module/src/logs/*
