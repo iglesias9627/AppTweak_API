@@ -211,9 +211,12 @@ You will find some docker environment variables in the `/docker/docker-compose.y
 ## Docker Images
 When executing docker-compose up -d, Docker will automatically download the images hosted in my public DockerHub repository. However, if you prefer to download the image separately beforehand, you can use the following command:
 
-- ```bash docker pull iglesias9627/node_js_fetching_module:v0.0.1```
-
-- ```bash docker pull iglesias9627/ruby_api_sinatra:v0.0.2```
+```bash 
+docker pull iglesias9627/node_js_fetching_module:v0.0.1
+```
+```bash 
+docker pull iglesias9627/ruby_api_sinatra:v0.0.2
+```
 
 `iglesias9627/node_js_fetching_module:v0.0.1` docker image is the NodeJS application and `iglesias9627/ruby_api_sinatra:v0.0.2` is the Ruby REST API.  
 
