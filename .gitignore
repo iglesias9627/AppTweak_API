@@ -1,4 +1,3 @@
-# Ignore DB directory 
 docker/DB/*
 docker/logs/*
 api/logs/*
