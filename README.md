@@ -102,6 +102,15 @@ Create a new location and store it in MongoDB.
     }
     ```
 
+- **Error when slug format is not correct:**
+    ```json
+    {
+        "errors": [
+            "Slug is invalid"
+        ]
+    }
+    ```
+
 ### Retrieve temperature forecasts
 
 - **Endpoint:**
@@ -133,44 +142,40 @@ Retrieve temperature forecasts of a stored Location in MongoDB in a date range. 
         "error": "Location: san-salvador not found in database!"
     }
     ```
+
 - **Error when temperature data does not exists in DB and we cannot retreive it from Weather API:**
     ```json
     {
         "error": "Start date must be from 2024-03-05"
     }
     ```
+
 - **Error when end date is after start date:**
     ```json
     {
         "error": "End date must be after the start date"
     }
     ```
-- **Some error handled:**
+
+- **Error when date format is not correct:**
     ```json
-    ```
-- **Some error handled:**
-    ```json
-    ```
-- **Some error handled:**
-    ```json
-    ```
-- **Some error handled:**
-    ```json
-    ```
-- **Some error handled:**
-    ```json
+    {
+        "error": "Invalid date format. Use YYYY-MM-DD"
+    }
     ```
 
-## Accessing the Services
+## Point of access of Docker Containers
 
 - **Ruby API (REST API):**
   - Port: 4567 
   - Base URL: http://localhost:4567
   - Endpoint for Locations: /locations/
-  - Endpoint for Temperature forecasts: /temperature_forecast/
+  - Endpoint for Temperature forecasts: /temperature_forecast/:slug/:start_date/:end_date
+  - DB: admin
 
 - **NodeJS Data Fetching Module:**
   - No specific port
+  - DB: admin
 
 - **MongoDB:**
   - Port: 27017
@@ -178,8 +183,38 @@ Retrieve temperature forecasts of a stored Location in MongoDB in a date range. 
 - **Mongo-Express:**
   - Port: 8081
   - Base URL: http://localhost:8081/
+  - user: admin
+  - password: admin
+  - DB: admin
 
-## Environment Variables
+## Docker Environment Variables
+You will find some docker environment variables in the `/docker/docker-compose.yml` file.
+
+- **mongo:**
+  - MONGO_INITDB_ROOT_USERNAME: admin #(set admin username)
+  - MONGO_INITDB_ROOT_PASSWORD: admin #(set password)
+
+- **mongo-express:**
+  - ME_CONFIG_MONGODB_ADMINUSERNAME: admin                      #(admin username to connect DB)
+  - ME_CONFIG_MONGODB_ADMINPASSWORD: admin                      #(password to connect DB)
+  - ME_CONFIG_MONGODB_URL: mongodb://admin:admin@mongo:27017/   #(URL of mongoDB)
+
+- **ruby-api-app:**
+  - RACK_ENV: production    #(env variable to run application in docker container)
+
+- **nodejs-fetch-module:**
+  - MONGODB_URI: 'mongodb://admin:admin@mongo:27017/admin'  #(URL of mongoDB)
+  - TIME_CRON: '50 18 * * *'  #(hour to execute the fetch-save/update data | use => MIN HOUR DAY MONTH WEEK)
+  - LOGGER_DIR: logs                                        #(directory where save logs of app)
+
+## Docker Images
+When executing docker-compose up -d, Docker will automatically download the images hosted in my public DockerHub repository. However, if you prefer to download the image separately beforehand, you can use the following command:
+
+- ```bash docker pull iglesias9627/node_js_fetching_module:v0.0.1```
+
+- ```bash docker pull iglesias9627/ruby_api_sinatra:v0.0.2```
+
+`iglesias9627/node_js_fetching_module:v0.0.1` docker image is the NodeJS application and `iglesias9627/ruby_api_sinatra:v0.0.2` is the Ruby REST API.  
 
 ## Ruby
 
